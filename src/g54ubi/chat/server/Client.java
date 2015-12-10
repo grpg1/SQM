@@ -23,13 +23,6 @@ public class Client {
 	private JTextField textField;
 	private JTextArea chatMessage = new JTextArea();
 	private JTextArea onlineUser = new JTextArea();
-	//private BufferedReader in;
-    //private PrintWriter out;
-    
-    private String serverAddress;
-    private int serverPort;
-    private String[] commands;
-    private String clientName;
 
 	/**
 	 * Launch the application.
@@ -40,7 +33,7 @@ public class Client {
         client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Close frame when close button is pressed
         client.frame.setVisible(true);//Show frame
         client.frame.setResizable(false);//Does not allow maximization of the Frame
-        client.run();
+        //client.run();
     }
 
 	/**
@@ -103,66 +96,4 @@ public class Client {
 		lblUserName.setBounds(24, 406, 74, 23);
 		frame.getContentPane().add(lblUserName);
 	}
-	
-	
-	 public void run() {
-
-		    BufferedReader in = null;
-		    PrintWriter out = null;
-		    Socket clientSocket = null;
-		    Random rand = new Random();
-
-		    try {
-		      clientSocket = new Socket(this.serverAddress, this.serverPort); 
-		      in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		      out = new PrintWriter(clientSocket.getOutputStream(), true);
-		    } catch (IOException e) {
-		      e.printStackTrace();
-		    }
-
-		    try {
-		    	
-		      System.out.println(this.clientName + ": " + in.readLine());
-		    } catch (IOException e) {
-		      e.printStackTrace();
-		    }
-
-		    for (String command: commands) {
-		    
-		      out.println(command);
-		      try {
-		        System.out.println(this.clientName + ": " + in.readLine());
-		      } catch (IOException e) {
-		        e.printStackTrace();
-		      }
-
-		      try {
-		        Thread.sleep(rand.nextInt(1000));
-		      } catch (InterruptedException e) {
-		        e.printStackTrace();
-		      }
-		    }
-
-		  }
-	 
-	/*@SuppressWarnings("unused")
-	private void run() throws IOException {
-    	//Connect to server.java
-        @SuppressWarnings("resource")
-		Socket socket = new Socket("localhost", 9000);
-        in = new BufferedReader(new InputStreamReader(
-            socket.getInputStream()));
-        out = new PrintWriter(socket.getOutputStream(), true);
-
-        while (true) {
-            String line = in.readLine();
-            if (line.startsWith("SUBMITNAME")) {
-                out.println(name);
-            } else if (line.startsWith("NAMEACCEPTED")) {
-                textField.setEditable(true);
-            } else if (line.startsWith("MESSAGE")) {
-            	chatMessage.append(line.substring(8) + "\n");
-            }
-        }
-    }*/
 }
